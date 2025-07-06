@@ -1,4 +1,3 @@
-# ✅ FILE: server_socket.py (ĐÃ FIX TOÀN BỘ sendall KHÔNG encode() TRÊN bytes)
 import tkinter as tk
 from tkinter import scrolledtext, messagebox
 import socket, threading, json
@@ -19,7 +18,7 @@ PORT = 65432
 
 root = tk.Tk()
 root.title("Ứng Dụng Nhận Tin Nhắn - Receiver")
-root.geometry("600x800")
+root.geometry("600x750")
 root.resizable(False, False)
 
 header_frame = tk.Frame(root, pady=10)
@@ -140,9 +139,9 @@ def socket_server():
                 print(f"[SERVER] Kết nối từ: {addr}")
                 data = conn.recv(1024).decode('utf-8').strip()
                 if data == "Hello!":
-                    conn.sendall(b"Ready!")  # ✅ ĐÃ FIX
+                    conn.sendall(b"Ready!")  
                     sender_pub = conn.recv(4096).decode('utf-8').strip()
-                    conn.sendall(receiver_public.export_key())  # ✅ ĐÃ FIX
+                    conn.sendall(receiver_public.export_key())
                 else:
                     full_data = data + conn.recv(8192).decode('utf-8')
                     packet = json.loads(full_data)
